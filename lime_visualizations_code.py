@@ -436,6 +436,7 @@ def display_abstract_with_highlights(doi, df, global_importance_col="global_avg_
 
 def create_inconsistency_scatter_plot(df, global_importance_col):
     # Filter for inconsistent instances
+    df['is_inconsistent'] = df['is_inconsistent'].fillna(False)
     inconsistent_indices = df[df['is_inconsistent']].index
     df.loc[inconsistent_indices, 'importance_diff'] = (df.loc[inconsistent_indices, 'importance_norm'] - df.loc[inconsistent_indices, global_importance_col]).round(2)
     df.loc[inconsistent_indices, 'color'] = df.loc[inconsistent_indices, 'importance_diff'].apply(lambda x: 'red' if x >= 0 else 'blue')
